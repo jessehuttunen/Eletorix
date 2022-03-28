@@ -1,0 +1,30 @@
+body{
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    font-size: 100%;
+    font-family:"Trebuchet MS", sans-serif;
+    background-color: white;
+}
+
+.page {
+    background-color: #E9E9E9;
+    max-width: 50%;
+    width: 50%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: groove;
+    border-color: black;
+    border-width: 1px;
+    padding: 5%;
+    overflow: auto;
+}
+img{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+pre{
+    font-family:"Trebuchet MS", sans-serif;
+}

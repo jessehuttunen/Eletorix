@@ -1,0 +1,101 @@
+.viestitContainer {
+    margin: auto;
+    margin-top: 2em;
+    background-color: #002444;
+    width: 80%;
+    color: white;
+}
+.saapuneetViestit, .lahetetytViestit, .lahetaUusiViesti {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.lahetaUusiViesti textarea {
+    margin-top: 2em;
+    width: 100%;
+}
+
+.osio {
+    width: 80%;
+    border-bottom: 2px solid lightskyblue;
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 2em;
+}
+
+.viesti {
+    background-color: grey;
+    width: 80%;
+    margin: 1em;
+    padding: 1em;
+    color: black;
+}
+.viestiSis {
+    display: none;
+    background-color: white;
+    padding: 1em;
+    width: 100%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.merkitse {
+    float: right;
+    background-color: gainsboro;
+    padding: 1em;
+    border: 1px solid black;
+}
+.vastaaLah {
+    position: relative;
+    bottom: 0;
+    background-color: gainsboro;
+    padding: 1em;
+    border: 1px solid black;
+    margin-top: 3em;
+    float: right;
+}
+
+.uusiViesti {
+    background-color: lightgreen;
+}
+
+.navAccount {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    flex-direction: row;
+    align-items: stretch;
+    padding: 1em;
+}
+
+.navAccount h1
+{
+    color: black;
+    width: 100%;
+}
+
+.goUp {
+    display: none;
+    margin-left: 10px;
+}
+
+.selected {
+    background-color: darkblue;
+    color: white;
+}
+@media only screen and (max-width: 400px) {
+    .viestitContainer {
+        width: 100%;
+    }
+}

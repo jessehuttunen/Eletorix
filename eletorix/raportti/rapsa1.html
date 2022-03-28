@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>TTMS0700 - Web-projekti 2 - Eletorix</title>
+    <link rel="stylesheet" type="text/css" href="tyyli.css">
+      <style>code{background-color:gainsboro;}.raportti{width: 60%;margin:auto;}.kpl{margin-top:2em;}pre{margin:1em;padding:1em;background-color:lightgray;box-shadow:0 0 5px;}</style>
+  </head>
+  <body>
+    <div class="page">
+      <h1>Eletorix - kaiken elektroniikan kauppapaikka</h1>
+      <h3>Jesse Huttunen L5321<br>Aatu Anttila L5275<br>Tuomas Marttila K8430<br>TTMS0700 Web-projekti 2<br>16.4.2019</h3><br>
+      <h2>1. Työn kuvaus</h2>
+      <a>Opintojaksossa on tarkoitus on toteuttaa laaja web-sovellus, jossa käytetään asiakas- ja palvelinpuolen tekniikoita.<br><br>
+      Eletorix on käytetyn elektroniikan kauppapaikka, Tori.fi:n tapaan. Rekisteröityneet käyttäjät voivat lisätä uusia ilmoituksia, ja kuka tahansa voi katsella näitä ilmoituksia ja jättää kysymyksiä niistä.
+    Eletorix:in käyttämiä tekniikoita on php, AJAX, JavaScript, jQuery, html ja css. Sovellus ja tietokanta pyörii JAMK:in labranet-palvelimella.<br><br>
+        <a href="https://student.labranet.jamk.fi/~L5321/ttms0700/eletorix/index.php">Linkki Eletorix</a><br><a>Käyttäjätunnkuset adminin testaamiseen: admin, salasana</a><br>
+          
+          <a href="https://student.labranet.jamk.fi/~L5321/ttms0700/eletorix/00-php-syntax-highlighter.php">Lähdekoodi</a>
+          <a href="https://student.labranet.jamk.fi/~L5321/ttms0700/eletorix/rekkirj/00-php-syntax-highlighter.php">Lähdekoodi</a>
+          <a href="https://student.labranet.jamk.fi/~L5321/ttms0700/eletorix/rekkirj/includes/00-php-syntax-highlighter.php">Lähdekoodi</a><br>
+          <a href="https://student.labranet.jamk.fi/~L5321/ttms0700/eletorix/raportti/eletorix.zip">Linkki zip-pakettiin</a>
+        </a>
+    <h2>2. Vaatimusmäärittely</h2>
+       <pre>
+Toiminnot: Käyttäjä
+
+
+Rekisteröityminen
+
+Käyttäjän pitää pystyä rekisteröitymään sivustolle, jotta hän voi lisätä omia myynti-ilmoituksia.
+Rekisteröityessä vaaditaan käyttäjän koko nimi, osoite, sähköposti ja puhelinnumero.
+
+
+Sisäänkirjautuminen
+
+Käyttäjä kirjautuu sivustolle kirjoittamalla tunnuksensa ja salasanansa niille osoitettuihin kenttiin etusivulla.
+
+
+Salasanan vaihto
+
+Käyttäjä voi vaihtaa salasanaansa omissa asetuksissaan.
+
+
+Myynti-ilmoituksen lisäys
+
+Käyttäjä voi lisätä sivustolle uusia myynti-ilmoituksia, kun on ensin kirjautunut sivustolle sisään.
+
+
+Myynti-ilmoituksen poisto
+
+Käyttäjän  on mahdollista poistaa omia myynti-ilmoituksia omien myynti-ilmoitusten listauksessa.
+
+
+Myynti-ilmoituksen muokkaus
+
+Käyttäjä pystyy muokkaamaan oman myynti-ilmoituksen tietoja.
+
+
+Myynti-ilmoituksen haku
+
+Käyttäjä voi etsiä myynti-ilmoituksia hakusanalla tai hakuvalikoista valitsemillaan vaihtoehdoilla.
+
+
+Viestintä
+
+Käyttäjän on mahdollista viestiä muiden myynti-ilmoitusten tekijöiden kanssa tuotteisiin liittyen,
+sekä viestiä omien myynti-ilmoituksiin tulleiden viestien lähettäjien kanssa.
+
+
+Omien myynti-ilmoitusten listaus
+
+Käyttäjä pääsee selaamaan omia myynti-ilmoituksiaan myynti-ilmoitusten listauksesta, ja samalla muokkaamaan ja poistamaan niitä.
+
+
+Toiminnot: Admin
+
+
+Käyttäjien oikeudet
+
+Adminilla on kaikki käyttäjän toiminnot sekä, oikeudet poistaa toisia käyttäjiä.
+Adminilla on myös oikeudet lisätä ja poistaa kategorioita.
+
+
+Kaikkien myynti-ilmoitusten poisto
+
+Adminilla on oikeus poistaa mikä tahansa myynti-ilmoitus.
+
+
+
+Käyttäjätasot
+
+Admin
+
+Adminilla on oikeudet peruskäyttäjien tietojen muokkaamiseen ja tunnusten poistoon, sekä uuden salasanan lähettämiseen.
+Admin pystyy poistamaan sivulta minkä tahansa myynti-ilmoituksen.
+Admin voi lisätä ja poistaa kategorioita .
+
+Peruskäyttäjä
+
+Peruskäyttäjä voi lisätä sivulle omia myynti-ilmoituksiaan, sekä muokata ja poistaa niitä.
+Käyttäjä voi viestittää muiden myynti-ilmoitusten luojien kanssa, sekä omiin myynti-ilmoituksiin tulleiden viestien lähettäjille.
+
+<img src="TIETOKANTA MODEL">
+
+</pre>
+      <h2>3. Toteutus </h2><br>
+<h2>Vastuualueet - Aatu</h2>
+<h3>Päävastuualueet:</h3>
+<li>Ilmoitus, kommentit, käyttäjän tili, ylläpidon sivut, suosikit, viestit</li>
+<h3>Osittain:</h3>
+<li>banner.php, index.php (mm. näytä lisää/vähemmän-nappi), insert.php (mm. kuvan rajoitukset ja kuvien nimeäminen), css</li>
+    <div class="kpl">
+    <h2>Ilmoitus</h2>
+        <ul><li>ilmoitus.php</li></ul>
+    <h3>Muuttujat</h3>
+    <pre>
+    $id = $row['idilmoitukset'];
+    $tuotteennimi = $row['tuotteennimi'];
+
+    $paivays_koko = $row['paivays'];
+    $paivays = "";
+    $paivays .= substr($paivays_koko,8,2).".";  //päivä
+    $paivays .= substr($paivays_koko,5,2).".";  //kk
+    $paivays .= substr($paivays_koko,0,4);      //vuosi
+    $paivaysklo = "";
+    $paivaysklo .= substr($paivays_koko,10,6);
+
+    $kategoria = $row['idkategoria'];
+    $hinta = $row['hinta'];
+    $tuotekuvaus = $row['tuotekuvaus'];
+    $kuva = $row['kuva'];
+    $kateg = $row['idkategoria'];
+    $kategorianimi = $row['kategorianimi'];
+    $nimi = $row['nimi'];
+    $email = $row['email'];
+    $puhnum = $row['puhnum'];
+    $osoite = $row['osoite'];
+    $kaupunki = $row['kaupunki'];
+    $kayttajaid = $row['kayttaja_idkayttaja'];
+    $ref = $_SERVER['PHP_SELF'] . "?id=$id"; // Ilmoituksen URL
+
+    // Istuntomuuttujat:
+    $userid = $_SESSION['Id']; // Käyttäjänimi
+    $kayttajatyyppi = $_SESSION['tyyppi']; // Käyttäjätyyppi
+    $_SESSION['suosikit']; // Suosikit-lista
+    </pre>
+        <h4>Haetaan ilmoitus id:n perusteella</h4>
+<code>SELECT * FROM ilmoitus INNER JOIN kategoria ON ilmoitus.kategoria_idkategoria=kategoria.idkategoria INNER JOIN kayttaja ON ilmoitus.kayttaja_idkayttaja=kayttaja.idkayttaja WHERE idilmoitukset=:id;</code>
+    </div>
+    <div class="kpl">
+    <h2>Kommentit</h2>
+        <ul><li>ilmoitus.php</li></ul>
+    <p>Kommentit lähetetään ja ladataan ilmoitus.php tiedostossa. Kommentit lähetetään anonyymeinä nimimerkillä. </p>
+    <h3>Muuttujat</h3>
+    <pre>
+    $kommenttiteksti = $_POST['kommenttiteksti']; // Kommentin teksti
+    $nickname = $_POST['nickname']; // Kommentoijan nimimerkki</pre>
+        <h4>Kommentin lisäys</h4>
+<code>INSERT into kommentti (kommenttiteksti, nickname, kommenttipaivays, ilmoitus_idilmoitukset) values ('$kommenttiteksti', '$nickname', NOW(), '$idilmoitus';</code>
+    <h4>Ilmoituskohtaisten kommenttien haku</h4>
+<code>SELECT * from kommentti WHERE ilmoitus_idilmoitukset = $id ORDER BY idkommentti ASC;</code>
+    <h4>Haetaan kommentin tykkäysten määrä</h4>
+<code>SELECT COUNT(*) FROM kommentti_peukut WHERE kommentti_idkommentti = '$idkommentti';</code>
+    <h2>Kommenttien tykkäys</h2>
+        <ul><li>ilmoitus.php</li>
+            <ul><li>thumbsup.php</li></ul></ul>
+    <p>Kommentteja voi tykätä painamalla peukkua kommentissa. Kommentteja tykätessä pitää olla kirjautunut sisälle, tai muuten sivu ohjaa kirjautumissivulle.</p>
+    <h4>Kommentin tykkäyksen lisääminen</h4>
+<code>INSERT INTO kommentti_peukut (kayttaja_idkayttaja, kommentti_idkommentti); VALUES ('$idkayttaja', $idkommentti)</code>
+    <h4>Kommentin tykkäyksen poisto</h4>
+<code>DELETE FROM kommentti_peukut WHERE kayttaja_idkayttaja = '$idkayttaja' AND kommentti_idkommentti = '$idkommentti';</code>
+    </div>
+    <div class="kpl">
+    <h2>Käyttäjän tili</h2>
+        <ul><li>account.php</li></ul>
+    <p>"Eletorix-tili" bannerissä. Käyttäjä voi selata omia ilmoituksiaan, muuttaa omia asetuksiaan, sekä muuttaa salasanaansa.</p>
+    <h3>Muuttujat</h3>
+    <pre>
+    // Istuntomuuttujat:
+    $userid = $_SESSION['Id']; // Käyttäjänimi
+
+    // Käyttäjän tiedot
+    $nimi = $row['nimi'];
+    $email = $row['email'];
+    $puhnum = $row['puhnum'];
+    $osoite = $row['osoite'];
+    $kaupunki = $row['kaupunki'];
+    $salasana = $row['salasana'];
+
+    // Käyttäjän ilmoitukset
+    $id = $row['idilmoitukset'];
+    $tuotteennimi = $row['tuotteennimi'];
+    $paivays = $row['paivays'];
+    $hinta = $row['hinta'];
+    $tuotekuvaus = $row['tuotekuvaus'];
+    $kuva = $row['kuva'];
+    $kategoria = $row['kategoria_idkategoria'];
+    $nimi = $row['nimi'];
+    $email = $row['email'];
+    $puhnum = $row['puhnum'];
+    $osoite = $row['osoite'];
+    $kaupunki = $row['kaupunki'];
+    $ref = $_SERVER['PHP_SELF'];
+
+    // Salasanan vaihto
+    $uusi_sn = $_POST['uusi_sn'];
+    $uusi_sn_uudelleen = $_POST['uusi_sn_uudelleen'];
+    $nykyinen_sn = $_POST['nykyinen_sn'];
+
+    $nykyinen_sn_db = $row['salasana']; // Nyk. salasana tietokannassa
+    </pre>
+    <h4>Käyttäjän tietojen haku</h4>
+<code>SELECT * FROM kayttaja WHERE nimi = :username;</code>
+    <h3>Omat ilmoitukset</h3>
+    <h4>Omien ilmoitusten haku</h4>
+<code>SELECT * FROM ilmoitus INNER JOIN kayttaja ON ilmoitus.kayttaja_idkayttaja = kayttaja.idkayttaja WHERE kayttaja.nimi =:username;</code>
+    <h3>Tietojen muokkaus</h3>
+        <ul><li>updateacc.php</li></ul>
+<code>UPDATE kayttaja SET email='$email', puhnum='$puhnum', osoite='$osoite', kaupunki='$kaupunki' WHERE nimi ='$username';</code>
+    <h3>Salasanan vaihto</h3>
+        <ul><li>changepwd.php</li></ul>
+    <h4>Haetaan nykyinen salasana</h4>
+<code>SELECT salasana FROM kayttaja WHERE nimi = :username;</code>
+    <h4>Haetaan käyttäjän id nimen perusteella</h4>
+<code>SELECT idkayttaja FROM kayttaja WHERE nimi = :username;</code>
+    <h4>Asetetaan uusi salasana</h4>
+<code>UPDATE kayttaja SET salasana=md5('$uusi_sn') WHERE idkayttaja = '$idkayttaja';</code>
+    </div>
+    <div class="kpl">
+    <h2>Ylläpito</h2>
+        <ul><li>adminpage.php</li>
+        <ul><li>addkategoria.php</li>
+            <li>delkategoria.php</li>
+            <li>delkayttaja.php</li></ul>
+        </ul>
+    <p>Admin-tason käyttäjä voi lisätä ja poistaa kategorioita ja käyttäjiä ylläpidon sivulla.</p>
+    <h3>Muuttujat</h3>
+    <pre>
+    // Istuntomuuttujat
+    $username = $_SESSION['userId']; // Käyttäjänimi
+
+    $tyyppi = $row['tyyppi']; // Käyttäjätyyppi (onko admin)
+
+    // Käyttäjien haku valikkoon
+    $nimi = $row['nimi'];
+    $idkayttaja = $row['idkayttaja'];
+
+    // Kategorioiden haku valikkoon
+    $kategorianimi = $row['kategorianimi']; // Kategorianimi
+    $idkategoria = $row['idkategoria']; // Kategoria ID
+
+    // Valinnan valinta valikosta
+    $valinta = $_POST['valikko'];
+    </pre>
+    <h4>Haetaan käyttäjän tyyppi (tarkistetaan onko admin)</h4>
+<code>SELECT tyyppi FROM kayttaja WHERE nimi = :username;</code>
+    <h4>Kategorian lisääminen</h4>
+<code>INSERT INTO kategoria (kategorianimi, kategoriakuvaus) VALUES('$nimi', '$kuvaus');</code>
+    <h4>Kategorian poisto</h4>
+<code>DELETE FROM kategoria where idkategoria = $valinta;</code>
+    <h4>Käyttäjän poisto</h4>
+<code>DELETE FROM kayttaja where idkayttaja = $valinta;</code>
+    </div>
+    <div class="kpl">
+    <h2>Suosikit</h2>
+        <ul><li>suosikit.php</li>
+        <ul><li>addsuosikki.php</li>
+            <li>delsuosikki.php / delsuosikki2.php</li></ul>
+        </ul>
+    <p>Ilmoituksia voi lisätä suosikeiksi istuntomuuttujaan. Samalla tulee oikeaan yläkulmaan popup, jossa kerrotaan, että ilmoitus on lisätty suosikkeihin (JS). Myös suosikkien määrä näkyy ylhäällä navigaatio-napeissa.</p>
+    <h3>Muuttujat</h3>
+    <pre>
+    // Istuntomuuttujat
+    $_SESSION['userId'] // Käyttäjänimi
+    $_SESSION['suosikit'] // Suosikkilista, sisältää suosikki-ilmoitusten ID:t
+
+    $idilmoitus = $_SESSION['suosikit'][$i] // Ilmoituksen ID suosikkilistan indeksissä $i
+
+    // Ilmoituksen muuttujat
+    $id = $row['idilmoitukset'];
+    $tuotteennimi = $row['tuotteennimi'];
+    $paivays = $row['paivays'];
+    $hinta = $row['hinta'];
+    $tuotekuvaus = $row['tuotekuvaus'];
+    $kuva = $row['kuva'];
+    $kategoria = $row['idkategoria'];
+    $kategorianimi = $row['kategorianimi'];
+    $nimi = $row['nimi'];
+    $email = $row['email'];
+    $puhnum = $row['puhnum'];
+    $osoite = $row['osoite'];
+    $kaupunki = $row['kaupunki'];
+    $ref = $_SERVER['PHP_SELF'];
+    </pre>
+    <h4>Suosikkien hakeminen</h4>
+<code>SELECT * FROM ilmoitus INNER JOIN kategoria ON ilmoitus.kategoria_idkategoria=kategoria.idkategoria INNER JOIN kayttaja ON ilmoitus.kayttaja_idkayttaja=kayttaja.idkayttaja WHERE idilmoitukset=:id;</code>
+    <h4>Suosikin lisääminen listaan</h4>
+<pre>if (isset($_SESSION['suosikit'])) {
+    if (!in_array($idsuosikki, $_SESSION['suosikit']))
+        array_push($_SESSION['suosikit'], $idsuosikki);
+} else {
+    $_SESSION['suosikit'] = array();
+    array_push($_SESSION['suosikit'], $idsuosikki);
+}</pre>
+    <h4>Suosikin poisto listasta ja listan järjestäminen uudelleen</h4>
+<pre>$i = array_search($idsuosikki, $_SESSION['suosikit']);
+unset($_SESSION['suosikit'][$i]);
+$_SESSION['suosikit'] = array_values($_SESSION['suosikit']);</pre>
+    </div>
+    <div class="kpl">
+    <h2>Viestit</h2>
+        <ul><li>viestikeskus.php</li>
+        <ul><li>uusiviesti.php</li>
+            <li>sendmsg.php</li>
+        </ul>
+        </ul>
+    <p>Viestejä voi lähettää ilmoituksessa painamalla "Ota yhteyttä myyjään"-nappia. Jos ei ole kirjautunut sisään, ohjataan kirjautumiseen. Viestit-osio on hieman keskeneräinen, koska sen lisääminen tapahtui projektin viimeisellä viikolla.</p>
+    <h3>Muuttujat</h3>
+    <pre>
+    $id = $row['idviesti']; // Viestin ID
+    $lahID = $row['idlahettaja']; // Viestin lähettäjän ID
+
+    $stmt2 = $db->prepare("SELECT nimi FROM kayttaja WHERE idkayttaja = '$lahID';");
+    $stmt2->execute();
+    $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+    $lah = $row2['nimi']; // Viestin lähettäjän käyttäjänimi
+
+    $tuoID = $row['idtuote']; // Viestiä koskevan tuotteen ID
+
+    $stmt2 = $db->prepare("SELECT tuotteennimi FROM ilmoitus WHERE idilmoitukset = '$tuoID';");
+    $stmt2->execute();
+    $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+    $tuo = $row2['tuotteennimi']; // Viestiä koskevan tuotteen nimi
+
+    $sis = $row['sisalto']; // Viestin sisältö
+    $pvm = $row['pvm']; // Viestin PVM
+    $lue = $row['luettu']; // Onko viesti luettu (true/false)
+
+    $pvm_koko = $row['pvm'];
+    $pvm = "";
+    $pvm .= substr($pvm_koko,8,2).".";  // päivä
+    $pvm .= substr($pvm_koko,5,2).".";  // kk
+    $pvm .= substr($pvm_koko,0,4);      // vuosi
+    $pvmklo = "";
+    $pvmklo .= substr($pvm_koko,10,6);
+
+    $vasID = $row['idvastaanottaja']; // Viestin vastaanottajan ID
+    $vas = $row2['nimi']; // Viestin vastaanottajan käyttäjänimi
+    </pre>
+    <h4>Valitaan käyttäjä</h4>
+<code>"SELECT * FROM kayttaja WHERE nimi = '$user';</code>
+    <h4>Haetaan uudet viestit</h4>
+<code>SELECT * FROM viesti WHERE idvastaanottaja = '$userID' AND luettu = 0 ORDER BY idviesti DESC;</code>
+    <h4>Haetaan lähettäjän nimi</h4>
+<code>SELECT nimi FROM kayttaja WHERE idkayttaja = '$lahID';</code>
+    <h4>Haetaan tuotteen nimi</h4>
+<code>SELECT tuotteennimi FROM ilmoitus WHERE idilmoitukset = '$tuoID';</code>
+    <h4>Haetaan kaikki viestit</h4>
+<code>SELECT * FROM viesti WHERE idvastaanottaja = '$userID' AND luettu = 1 ORDER BY idviesti DESC;</code>
+    <h4>Haetaan lähetetyt viestit</h4>
+<code>SELECT * FROM viesti WHERE idlahettaja = '$userID' ORDER BY idviesti DESC;</code>
+    <h4>Uuden viestin lähetys (sendmsg.php)</h4>
+<code>INSERT INTO viesti (idvastaanottaja, idlahettaja, idtuote, sisalto) values ($vasID, $lahID, '$tuoID', '$sis');</code>
+    </div>
+    <div class="kpl">
+    <h2>JS</h2>
+        <ul><li>javas.js</li><ul><li>Uuden salasanan lähetys AJAX</li>      <code>$("#vaihdaSalasanaForm").submit(function(event) { ...</code>
+        <li>Käyttäjätietojen päivitys AJAX</li> <code>$("#updateAccForm").submit(function(event) { ...</code>
+        <li>Suosikin lisääminen/poisto AJAX</li>
+        <code>    $(".addSuosikkiForm").submit(function(event) {
+        ...</code>
+        <li>Kommenttien tykkäys AJAX</li>
+        <code>$(".peukkuDiv").submit(function(event) { ...</code></ul>
+        </ul>
+    </div>
+    <br>
+<h2>Vastuualueet - Tuomas</h2>
+    <h3>Päävastuualueet:</h3>
+    <li>Sisäänkirjautuminen, Rekisteröityminen</li>
+    <h3>Osittain:</h3>
+    <li>Autentikointi, css</li>
+    <div class="kpl">
+      <h2>Rekisteröityminen</h2>
+          <ul><li>signup.php</li>
+          <ul><li>signup.inc.php</li>
+          </ul>
+          </ul>
+    <h3>Muuttujat</h3>
+    <pre>
+    $username = $_POST['uid'];
+    $email = $_POST['mail'];
+    $password = $_POST['pwd'];
+    $passwordRepeat = $_POST['pwd-repeat'];
+    $puhnum = $_POST['puhnum'];
+    $osoite = $_POST['osoite'];
+    $kaupunki = $_POST['kaupunki'];
+    $sql ="INSERT INTO kayttaja (nimi, email, puhnum, osoite, kaupunki, salasana) VALUES (?,?,?,?,?,?)";
+    $stmt =mysqli_stmt_init($conn);
+    </pre>
+        <h4>Esimerkki errorhandlerista</h4>
+<code>//errors onko kenttÃ¤ tyhjÃ¤
+
+    if (empty($username) || empty($email) || empty($password) || empty($passwordRepeat) || empty($osoite) || empty($puhnum) || empty($kaupunki)) {
+        header("Location: ../signup.php?error=emptyfields&uid=".$username."&mail".$email);
+        exit();
+    }
+</code>
+      <h4>Lisääminen tietokantaan</h4>
+<code>
+    mysqli_stmt_bind_param($stmt, "ssssss", $username, $email, $puhnum, $osoite, $kaupunki, md5($password));
+                    mysqli_stmt_execute($stmt);
+</code>
+    </div>
+    <div class="kpl">
+
+        <h2>Kirjautuminen ja uloskirjautuminen</h2>
+            <ul><li>rekkirj/header.php</li>
+            <ul><li>login.inc.php</li>
+              <li>logout.inc.php</li>
+            </ul>
+            </ul>
+      <h3>Muuttujat</h3>
+      <pre>
+        $mailuid = $_POST['mailuid'];
+        $password = $_POST['pwd'];
+        $result = mysqli_query($conn,"SELECT * FROM kayttaja WHERE nimi='" . $mailuid . "' and salasana = '". md5($password) ."'");
+        $count  = mysqli_num_rows($result);
+        $row = $result -> fetch_assoc();
+        $_SESSION['Id'] = $row['idkayttaja'];
+        $_SESSION['tyyppi'] = $row['tyyppi'];
+        $_SESSION['userId'] = $row['nimi']; //session tÃ¤hÃ¤n lisÃ¤Ã¤ []
+        $_SESSION['userUid'] = $row['salasana'];
+      </pre>
+          <h4>Esimerkki errorhandlerista</h4>
+  <code>    //tyhjÃ¤t kentÃ¤t
+
+    if (empty($mailuid) || empty($password)) {
+        header("Location: ../index.php?error=emptyfields");
+        exit();
+  </code>
+        <h4>Kirjautuminen ja sessio</h4>
+        <p>Mikäli hakutulos löytyi kirjataan käyttäjä sisään ja ohjataan etusivulle ja aloitetaan sessio. Jos hakutuloksia = 0 tulee error. Painaessa uloskirjautumisnappia, tuhoaa se session ja ohjaa kirjautumissivulle.</p>
+        <pre>
+          if(count($_POST)>0) {
+      	$result = mysqli_query($conn,"SELECT * FROM kayttaja WHERE nimi='" . $mailuid . "' and salasana = '". md5($password) ."'");
+      	$count  = mysqli_num_rows($result);
+      	if($count==0) {
+               header("Location: ../index.php?error=wrongpwd");
+              exit();
+      	} else {
+              session_start();
+              $row = $result -> fetch_assoc();
+              $_SESSION['Id'] = $row['idkayttaja'];
+              $_SESSION['tyyppi'] = $row['tyyppi'];
+              $_SESSION['userId'] = $row['nimi']; //session tÃ¤hÃ¤n lisÃ¤Ã¤ []
+              $_SESSION['userUid'] = $row['salasana'];
+               header("Location: ../../index.php?");
+              exit();
+      	}
+        </pre>
+      </div>
+        
+        
+        
+        <h2>Vastuualueet - Jesse</h2>
+    <h3>Päävastuualueet:</h3>
+    <li>index.php, hae.php, lisaa.php, insert.php, mod.php, update.php, remove.php + näiden animaatiot ja css:ät(pois lukien suosikin lisätessä tuleva ikkuna). Vectori grafiikka. </li>
+    <h3>Osittain:</h3>
+    <li>Banner.php ja sen css(pois lukien suosikit ja viestit nappien numerointi animaatio): valikon toiminta pienellä näytöllä on minun, itse valikon sisällä nappien toiminnot Aatun ja Tuomaksen. </li>
+    <div class="kpl">
+      <h2>Etusivu</h2>
+          <ul><li>index.php</li>
+          </ul>
+        <h4>Kategorioiden haku kategoria selectille</h4>
+<img src="kuvia/kateg.PNG">
+
+ 
+        <h4>Ilmoituksen muuttujat</h4>
+<pre>
+
+$montaIlmoitustaNaytetaan = 8;          
+if (isset($_POST['naytaEnem'])) {
+    $montaIlmoitustaNaytetaan = $_POST['montaNaytetaan'];
+    $montaIlmoitustaNaytetaan += 8;
+}            
+
+$userid = NULL;
+    if (isset($_SESSION['Id'])) {
+        $userid = $_SESSION['Id'];
+    }            
+$kayttajatyyppi = NULL;
+if (isset($_SESSION['tyyppi'])) {
+        $kayttajatyyppi = $_SESSION['tyyppi'];
+    }
+
+$id = $row['idilmoitukset'];
+$tuotteennimi = $row['tuotteennimi'];
+$paivays = $row['paivays'];
+$hinta = $row['hinta'];
+$tuotekuvaus = $row['tuotekuvaus'];
+$kuva = $row['kuva'];
+$kateg = $row['idkategoria'];
+$kategorianimi = $row['kategorianimi'];
+$kayttajaid = $row['kayttaja_idkayttaja'];
+$nimi = $row['nimi'];
+$email = $row['email'];
+$puhnum = $row['puhnum'];
+$osoite = $row['osoite'];
+$kaupunki = $row['kaupunki'];
+
+$ref = $_SERVER['PHP_SELF'];
+
+$favo[0] = "tyhja";
+if(isset($_SESSION['suosikit'])){
+    $favo = $_SESSION['suosikit'];
+}
+
+</pre> 
+        <h4>Ilmoitusten haku tietokannasta</h4>
+<code>
+$sql = $db->query("SELECT * FROM ilmoitus INNER JOIN kategoria ON ilmoitus.kategoria_idkategoria=kategoria.idkategoria INNER JOIN kayttaja ON ilmoitus.kayttaja_idkayttaja=kayttaja.idkayttaja order by ilmoitus.idilmoitukset desc limit $montaIlmoitustaNaytetaan;");
+</code>
+        <h4>Ilmoituksen bannerin jossittelut</h4>
+<pre>
+ if (isset($_SESSION['Id']) && !in_array($id, $favo)) {
+ Näytetään sininen sydän
+ }
+ if (isset($_SESSION['Id']) && isset($_SESSION['suosikit']) && in_array($id, $_SESSION['suosikit']) ) { 
+  Näytetään punainen eli poista sydän. Saman toiminnan Aatu teki myös lisäksi saman javascriptilla jotta sydän muuttuu myös livenä.
+ }
+
+if ($userid==$kayttajaid or $kayttajatyyppi=="admin"){
+Näytetään muokkaus ja poista napit
+}
+
+</pre>
+  <h2>Haku</h2>
+          <ul><li>hae.php</li>
+          </ul>
+    <h3>Muuttujat</h3>
+    <pre>
+    $hakusana = "";   
+        $kategoria = "Kaikki";
+        $kategorianimi = $kategoria;
+        if (isset($_POST["tuotteennimi"]) && !empty($_POST["tuotteennimi"])){
+		$hakusana = $_POST["tuotteennimi"];  
+        };
+        if (isset($_POST["kategoria"]) && !empty($_POST["kategoria"])){
+        $kategoria = $_POST["kategoria"];    
+            $kategorianimi = $kategoria;
+            
+            if ($kategorianimi != "Kaikki"){
+                require_once("db-init.php");
+                $kat = $db->prepare("SELECT * FROM kategoria WHERE idkategoria=:kategoria;");
+                $kat->bindValue(':kategoria', $kategoria, PDO::PARAM_INT);
+                $kat->execute(); 
+                while($row = $kat->fetch(PDO::FETCH_ASSOC)) {
+                $kategorianimi = $row['kategorianimi'];
+                }
+            }
+        
+        };
+    </pre>
+        <h4>Haku sivun kategoria selectissä pieni ero etusivuun nähden, jotta valmiiksi valittuna kategoriana on lähetetty kategoria. </h4>
+        <img src="kuvia/haekateg">
+<h4>Ilmoituksen muuttujat ja jossitteluja</h4>
+<pre>
+require_once("db-init.php");  
+if (!isset($_SESSION)) session_start(); 
+            
+$userid = NULL;
+        if (isset($_SESSION['Id'])) {
+            $userid = $_SESSION['Id'];
+        }            
+$kayttajatyyppi = NULL;
+if (isset($_SESSION['tyyppi'])) {
+            $kayttajatyyppi = $_SESSION['tyyppi'];
+        }        
+$tuotteennimi = NULL;   
+$kategoria = "Kaikki";
+$kaupunki = NULL;
+$m_hinta = NULL;
+$p_hinta = NULL;
+            
+if (isset($_POST["tuotteennimi"]) && !empty($_POST["tuotteennimi"])){
+    $tuotteennimi = "%".$_POST["tuotteennimi"]."%";  
+};
+if (isset($_POST["kategoria"]) && !empty($_POST["kategoria"])){
+    $kategoria = $_POST["kategoria"];
+};
+if (isset($_POST["kaupunki"]) && !empty($_POST["kaupunki"])){
+    $kaupunki = "%".$_POST["kaupunki"]."%";  
+};
+if (isset($_POST["m_hinta"]) && !empty($_POST["m_hinta"])){
+    $m_hinta = $_POST["m_hinta"];  
+};   
+if (isset($_POST["p_hinta"]) && !empty($_POST["p_hinta"])){
+    $p_hinta = $_POST["p_hinta"];  
+}; 
+
+if($kategoria=="Kaikki"){
+    $kategoria=NULL;
+}  
+               
+  $limit = 18;
+$id = $row['idilmoitukset'];
+    $tuotteennimi = $row['tuotteennimi'];
+    $paivays = $row['paivays'];
+    $hinta = $row['hinta'];
+    $tuotekuvaus = $row['tuotekuvaus'];
+    $kuva = $row['kuva'];
+    $kateg = $row['idkategoria'];
+    $kategorianimi = $row['kategorianimi'];
+    $kayttajaid = $row['kayttaja_idkayttaja'];
+    $nimi = $row['nimi'];
+    $email = $row['email'];
+    $puhnum = $row['puhnum'];
+    $osoite = $row['osoite'];
+    $kaupunki = $row['kaupunki'];
+    
+    $ref = $_SERVER['PHP_SELF'];
+    $favo[0] = "";
+</pre> 
+<h4>Valittujen ilmoitusten haku tietokannasta</h4> 
+        <img src="kuvia/hae.PNG">
+      
+        
+        <h4>Paginointi</h4>
+        <h5>Javascriptillä submitetaan hakusivun formi ja samalla lähetetään sille sivun numero joka halutaan näytettäväksi. Plus hakutulosten määrän kirjoitus.</h5>
+        <pre>
+          //Sivun vaihtoa varten
+            function sivu(arvo){
+         document.getElementById("sivu").value = arvo;       
+        document.getElementById('hakuform').submit();
+            }
+            //Hakutulosten määrän näyttöön
+            function maara(arvo){
+         document.getElementById("maara").innerHTML = arvo;
+            }
+        </pre><br>
+        <h5>Montako ilmoitusta per sivu. Ja sitten lasketaan montako sivua hakutuloksista tulee. Lopussa vielä javascriptille kaikkien tulosten määrä.</h5>
+        <img src="kuvia/pagi.PNG">
+        <h5>Sivujen napit</h5>
+        <img src="kuvia/pagi2.PNG">
+        
+        
+<h2>Ilmoituksen lisääminen</h2>
+          <ul><li>insert.php</li>
+          </ul>
+        <h3>Kuvan tarkistus. Aatun kanssa tehty.</h3>
+        <img src="kuvia/img">
+        <h3>Ilmoituksen lisäys</h3>
+        <img src="kuvia/insert">
+        <p>Sql injektiot ei toimi.</p>
+        
+<h2>Ilmoituksen muokkaus </h2>
+          <ul><li>mod.php</li>
+          </ul>          
+        <pre>
+        UPDATE ilmoitus SET tuotteennimi='$tuotteennimi', hinta='$hinta',
+        tuotekuvaus='$tuotekuvaus', $if kategoria_idkategoria='$kategoria' WHERE idilmoitukset='$id'
+        </pre>
+<h2>Ilmoituksen poisto</h2>
+          <ul><li>remove.php</li>
+          </ul>  
+        <pre>
+        DELETE FROM ilmoitus WHERE idilmoitukset LIKE '$tunnus'
+        </pre>
+        
+        <h2>JS</h2>
+        <h4>javas.js</h4>
+        <pre>//Haku sivun rajauksen/kategorioden näyttäminen pienellä näytöllä
+    $('#nayta').on("click", function() {
+            if ( $("#nakyy").css('display') == 'none' ){
+            $( "#nakyy" ).css( "display", "block" );
+            $( "#nayta" ).css("border-radius", "60px 60px 0px 0px");
+         }
+         else{
+             $( "#nakyy" ).css( "display", "none" );
+             $( "#nayta" ).css("border-radius", "30px");
+         }
+    });
+    
+    //Valikko
+    $('.nayta').on("click", function() {
+            if ( $(".nakyy").css('display') == 'none' ){
+            $( ".nakyy" ).css( "display", "flex" );
+            $( ".nakyy" ).css( "flex-direction", "column" );
+            $( ".add" ).css( "width", "200px" );
+            $( ".nayta" ).css("width", "100%");
+         }
+         else{
+             $( ".nakyy" ).css( "display", "none" );
+             $( ".nayta" ).css("border-radius", "30px");
+         }
+    });
+    //Roskiksen avaaminen
+    $( ".roskis" ).hover(
+  function() {
+    $( this ).attr("src","kuvat/roskis_auki.png");
+  }, function() {
+    $( this ).attr("src","kuvat/roskis.png");
+  }
+);
+
+    
+    
+    // Pienentää haku suurennuslasia hieman nappia klikatessa.
+    $('body').on('click', '#hae_nappi', function (){
+        $( '#hakukuva' ).css( "transform", "scale(0.90)" );
+    });  
+
+    //Kieliopillista hifistelyä,hakutulos vs hakutulosta
+    if ($(".ilmoitus").length == '1'){
+        $("#hifistelya").text("Hakutulos sanalle: ");
+    }</pre>
+        
+    </div>
+        
+        
+        
+        
+        
+        
+      <div class="kpl"><br>
+
+      <h2>4. Ajan käyttö</h2>
+    <h3>Aatu</h3>
+    <li>Tunneilla: 23.5h</li>
+    <li>Kotona: ~60h</li>
+    Yhteensä: 80h+
+    <h3>Tuomas</h3>
+    <li>Tunneilla: ~20h</li>
+    <li>Kotona: ~20h</li>
+    Yhteensä: ~40h
+    <h3>Jesse</h3>
+    <li>Tunneilla: 23.5h</li>
+    <li>Kotona: ~50h</li>
+    Yhteensä: ~70h + aikaisemmat yli 80h, jotka olen käyttänyt pohjan luontiin aiemmilla visualisointi ja ohjelmointi kursseilla.
+    <br><br>
+      <h2>5. Itsearvio</h2>
+    <div class="kpl">
+    <h2>Aatu</h2>
+    <h3>Arvosanaehdotus: 4</h3>
+    <p>Työhön on käytetty paljon aikaa (81h+). Työssä on käytetty kurssin aiheisiin liittyviä teknologioita (php, AJAX, JavaScript, jQuery). Sivun ulkoasuun ja käytettävyyteen on panostettu. Lähdekoodi on luettavaa. Kommentointi hieman puutteellista php-tiedostoissa, mutta JavaScript-tiedostossa kommentointia löytyy paremmin. Työssä on huomioitu myös virheitä ja esimerkiksi eri sivuilla tarkistetaan ensin, että käyttöoikeudet on kunnossa. Työssä on käytetty MySQL-tietokantaa ja tietokantaosaaminen kasvoi huomattavasti kurssin aikana. Työtä on testattu monipuolisesti kurssin edetessä, joten bugeja ei tiedettävästi ole.</p>
+    <h2>Tuomas</h2>
+    <h3>Arvosanaehdotus: 2.5</h3>
+    <p>Kannoin korteni kekoon vaikka vähemmän töitä tein muihin verrattuna. Työt jaettiin projektin aluksi ja tein oman osani. Teknologiana käytin eniten php:tä ja koodi on luettavaa ja kommentteja löytyy. Aktiivisesti mukava tunneilla kuten muutkin ryhmän jäsenet. Rekisteröitymisprosessissa huomioitu tietoturvaa ja käyttäjän virheet.</p>
+    <h2>Jesse</h2>
+    <h3>Arvosanaehdotus: 4</h3>
+    <p>Olin tehnyt sivuston pohjan jo aiemmin, tämä helpotti ajallisesti omaa osuutta, koska ei tarvinnut ihan niin paljon käyttää aikaa enää visuaaliseen puoleen, vaikka kului siihenkin silti vielä aikaa kun haluaa hifistellä kaiken juuri kohdilleen kaikissa tilanteissa(puhelimet, tabletit ja eri selaimet). Koodi puoli sivustolle on vaihdettu täysin aikaisemmasta alkeellisesta ajaxista pääosin php:ksi. Koodi puolessa oli kyllä yllättävän suuri työ määrä vaikka alkuun käytin apuna myös web palvelin ohjelmoinnin matskuja ja tehtäviä. Monessa kohdassa on saanut pitkään päätä hakata seinään ennen kuin koodi alkaa tottelemaan. Esim hakusivun sql komennossa oli päänvaivaa jotta saa näkymään kaikki tiedot jos ei ole saatu rajaavaa arvoa, ifnull:illa se lopulta sitten alkoi toimimaan. Paginointikin oli aika työläs ja en ole täysin varma edelleenkään onko se pakko noin vaikean kautta tehdä, mutta ainakin se toimii. Javascripti puolella itsellä enemmän tuommoisia pieniä kikkoja, koska php tuntui omasta mielestä luontevammalle enimmissä tilanteissa tässä projektissa. Jotain varmaan unohdan tähän raporttiin merkata, mutta yksinkertaistettuna, minä tein sivuston rungon, Aatu käyttäjien ja ilmoituksen sivut ja Tuomas kirjautumis puolen. Aatun kanssa ollaan hyvin yhdessä saatu sivuja tehtyä, toisen keskittyessä toisiin sivuihin, ja aina ongelma tilanteissa auttaessa toista. Tuomas hoiti hyvin yksin tuon kirjautumis puolen ja oli apuna muualla. Aatu oli ohjaksissa Workbenchilla tietokantoja luodessa ja muokkaillessa, meidän auttaessa vieressä.  </p>
+    </div>
+    </div>
+  </body>
+</html>
